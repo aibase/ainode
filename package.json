@@ -18,7 +18,10 @@
   "author": "Stefan Ianta",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/aibase/ainode.git"
+    "type": "git",
+    "url": "https://github.com/aibase/ainode.git"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
