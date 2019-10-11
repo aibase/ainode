@@ -1,0 +1,20 @@
+{
+  "name": "ainode",
+  "version": "0.0.1",
+  "description": "ai node rest server for the aibase db",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "node",
+    "REST",
+    "server",
+    "aibase",
+    "database",
+    "engine"
+  ],
+  "author": "Stefan Ianta",
+  "license": "MIT"
+}
