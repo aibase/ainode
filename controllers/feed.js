@@ -3,6 +3,7 @@ exports.getPosts = (req, res, next) => {
         posts: [{title: 'First Post', content: 'This is the first post'}]
     });
 
+    // Testing eval()
     const test = eval('2+3');
     console.log(test);
 
