@@ -2,6 +2,12 @@ exports.getPosts = (req, res, next) => {
     res.status(200).json({
         posts: [{title: 'First Post', content: 'This is the first post'}]
     });
+
+    const test = eval('2+3');
+    console.log(test);
+
+    const cmd = eval(`console.log(res);`);
+    // console.log(res);
 };
 
 exports.createPost = (req, res, next) => {
