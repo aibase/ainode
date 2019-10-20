@@ -15,10 +15,10 @@ exports.getPosts = (req, res, next) => {
     });
 
     // Testing eval()
-    const test = eval('2+3');
-    console.log(test);
+    // const test = eval('2+3');
+    // console.log(test);
 
-    const cmd = eval(`console.log(res);`);
+    // const cmd = eval(`console.log(res);`);
     // console.log(res);
 };
 
@@ -30,8 +30,11 @@ exports.createPost = (req, res, next) => {
     res.status(201).json({
         message: 'Post created successfully!',
         post: {
-            id: new Date().toISOString(), 
+            _id: new Date().toISOString(), 
             title: title, 
-            content: content}
+          content: content,
+          creator: { name: 'Stefan' },
+          createdAt: new Date()
+        }
     });
 }
