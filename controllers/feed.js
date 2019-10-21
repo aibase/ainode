@@ -47,7 +47,7 @@ exports.createPost = (req, res, next) => {
     creator: { name: 'Stefan' }
   });
   post.save().then(result => {
-    console.log(result);
+    // console.log(result);
     res.status(201).json({
       message: 'Post created successfully!',
       post: result
@@ -55,5 +55,4 @@ exports.createPost = (req, res, next) => {
   }).catch(err => {
     console.log(err)
   });
-
 };
