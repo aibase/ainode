@@ -3,13 +3,39 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const multer = require('multer'); // module for file upload/download
 
 const feedRoutes = require('./routes/feed');
 
 const app = express();
 
+// Configure Multer for file upload/download; cb - call back function
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'files/images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString + '-' + file.originalname);
+  }
+});
+// Config multer file type Filter
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg'
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 // app.use(bodyParser.urlencoded()); // x-www-urlencoded <form>
 app.use(bodyParser.json()); // application/json
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
 app.use('/files/images', express.static(path.join(__dirname, 'files/images')));
 
 app.use((req, res, next) => {

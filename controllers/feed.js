@@ -31,13 +31,20 @@ exports.createPost = (req, res, next) => {
     error.statusCode = 422; // validation failed status code = 422
     throw error;   
   }
+  if (!req.file) {
+    const error = new Error('No image file provided.');
+    error.statusCode = 422;   // Validation error
+    throw error;
+  }
+  // Multer was able to extract a valid file
+  const imageUrl = req.file.path;
   const title = req.body.title;
   const content = req.body.content;
   // Create post in db + local storage ~ git repos
   const post = new Post({
     title: title,
     content: content,
-    imageUrl: 'files/images/duck.jpg',
+    imageUrl: imageUrl,
     creator: { name: 'Stefan' }
   });
   post.save().then(result => {
