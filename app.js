@@ -19,7 +19,15 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/feed',feedRoutes)
+app.use('/feed', feedRoutes); // registering the router for feed
+
+// registering the error handler for the REST app
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500; // if undefined assign 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
 
 mongoose.connect(
   'mongodb+srv://steve_ai91:o82HN0KCxu6dtS5w@cluster0-n7ze3.mongodb.net/ainode?retryWrites=true',
