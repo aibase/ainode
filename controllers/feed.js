@@ -6,25 +6,33 @@ const { validationResult } = require('express-validator');
 const Post = require('../models/post');
 
 exports.getPosts = (req, res, next) => {
-  // Find all posts in mongo db
+  const currentPage = req.query.page || 1; // set page to 1 as a default
+  const perPage = 2;  // same as in frontend 
+  let totalItems;     // total items in the database
   Post.find()
+    .countDocuments()
+    .then(count => {
+      totalItems = count;
+      // Find all posts in mongo db
+      return Post.find()
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    })
     .then(posts => {
       res
         .status(200)
-        .json({ message: 'Fetched posts successfully.', posts: posts });
+        .json({
+          message: 'Fetched posts successfully.',
+          posts: posts,
+          totalItems: totalItems
+        });
     })
     .catch(err => {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);  // passing the err to error handler middleware
-  }); 
-  // Testing eval()
-  // const test = eval('2+3');
-  // console.log(test);
-
-  // const cmd = eval(`console.log(res);`);
-  // console.log(res);
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);  // passing the err to error handler middleware      
+    });
 };
 
 exports.createPost = (req, res, next) => {
