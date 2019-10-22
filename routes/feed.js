@@ -10,11 +10,29 @@ const router = express.Router();
 router.get('/posts', feedController.getPosts);
 
 // POST /feed/post - create a Post
-router.post('/post', [
-  check('title').trim().isLength({min: 5}),
-  check('content').trim().isLength({min: 5})
-], feedController.createPost);
+router.post('/post',
+  [
+  check('title')
+    .trim()
+    .isLength({ min: 5 }),
+  check('content')
+    .trim()
+    .isLength({ min: 5 })
+  ],
+  feedController.createPost
+);
 
 router.get('/post/:postId', feedController.getPost);
+
+router.put('/post/:postId',
+  [
+  check('title')
+    .trim()
+    .isLength({ min: 5 }),
+  check('content')
+    .trim()
+    .isLength({ min: 5 })
+  ], feedController.updatePost
+);
 
 module.exports = router;
