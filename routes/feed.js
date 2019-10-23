@@ -1,6 +1,6 @@
 const express = require('express');
-// const { body } = require('express-validator/check'); // per Max
 const { check } = require('express-validator');
+// const { body } = require('express-validator/check'); // per Max
 
 const feedController = require('../controllers/feed');
 
