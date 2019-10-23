@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const multer = require('multer'); // module for file upload/download
 
 const feedRoutes = require('./routes/feed');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/feed', feedRoutes); // registering the router for feed
+app.use('/auth', authRoutes); // registering the router for auth
 
 // registering the error handler for the REST app
 app.use((error, req, res, next) => {
