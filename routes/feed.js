@@ -3,11 +3,12 @@ const { check } = require('express-validator');
 // const { body } = require('express-validator/check'); // per Max
 
 const feedController = require('../controllers/feed');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
 // GET /feed/posts
-router.get('/posts', feedController.getPosts);
+router.get('/posts', isAuth, feedController.getPosts);
 
 // POST /feed/post - create a Post
 router.post('/post',
