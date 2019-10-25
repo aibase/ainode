@@ -16,6 +16,7 @@ exports.getPosts = (req, res, next) => {
       totalItems = count;
       // Find all posts in mongo db
       return Post.find()
+        .populate('creator')
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
     })
