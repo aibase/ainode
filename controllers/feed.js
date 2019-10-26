@@ -6,35 +6,28 @@ const { validationResult } = require('express-validator');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-exports.getPosts = (req, res, next) => {
+exports.getPosts = async (req, res, next) => {
   const currentPage = req.query.page || 1; // set page to 1 as a default
   const perPage = 2;  // Pagination w 2 posts per page same as in frontend 
-  let totalItems;     // total items in the database
-  Post.find()
-    .countDocuments()
-    .then(count => {
-      totalItems = count;
-      // Find all posts in mongo db
-      return Post.find()
-        .populate('creator')
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);
-    })
-    .then(posts => {
-      res
-        .status(200)
-        .json({
-          message: 'Fetched posts successfully.',
-          posts: posts,
-          totalItems: totalItems
-        });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);  // passing the err to error handler middleware      
+  try {
+    // Find total number of items in the database
+    const totalItems = await Post.find().countDocuments();
+    const posts = await Post.find()
+      .populate('creator')
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+
+    res.status(200).json({
+      message: 'Fetched posts successfully.',
+      posts: posts,
+      totalItems: totalItems
     });
+  } catch (err) {
+    if (!err.statusCode) {
+        err.statusCode = 500;
+    }
+    next(err);  // passing the err to error handler middleware  
+  }
 };
 
 exports.createPost = (req, res, next) => {
