@@ -71,26 +71,25 @@ exports.createPost = async (req, res, next) => {
   }
 };
 
-exports.getPost = (req, res, next) => { 
+exports.getPost = async (req, res, next) => { 
   const postId = req.params.postId;
-  Post.findById(postId)
-    .then(post => {
-      if (!post) {
-        const error = new Error('Could not find post.');
-        error.statuscode = 404; // 404 - not found code
-        throw error;
-      }
-      res.status(200).json({
-        message: 'Post fetched.',
-        post: post
-      });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
+  const post = await Post.findById(postId)
+  try {
+    if (!post) {
+      const error = new Error('Could not find post.');
+      error.statuscode = 404; // 404 - not found code
+      throw error;
+    }
+    res.status(200).json({
+      message: 'Post fetched.',
+      post: post
+    });
+  } catch (err) {
+    if (!err.statusCode) {
       err.statusCode = 500;
     }
     next(err);  // passing the err to error handler middleware
-    });
+  }
 };
 
 exports.updatePost = (req, res, next) => {
