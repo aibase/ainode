@@ -8,7 +8,7 @@ const User = require('../models/user');
 
 exports.getPosts = (req, res, next) => {
   const currentPage = req.query.page || 1; // set page to 1 as a default
-  const perPage = 2;  // same as in frontend 
+  const perPage = 2;  // Pagination w 2 posts per page same as in frontend 
   let totalItems;     // total items in the database
   Post.find()
     .countDocuments()
