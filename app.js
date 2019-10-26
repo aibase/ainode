@@ -62,7 +62,8 @@ mongoose.connect(
   'mongodb+srv://steve_ai91:o82HN0KCxu6dtS5w@cluster0-n7ze3.mongodb.net/ainode?retryWrites=true',
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true 
+    useUnifiedTopology: true,
+    useFindAndModify: false
   }
 ).then(result => {
   app.listen(8081);
