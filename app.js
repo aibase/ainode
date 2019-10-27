@@ -67,7 +67,7 @@ mongoose.connect(
   }
 ).then(result => {
   const server = app.listen(8081);
-  const io = require('socket.io')(server); // setting up socket.io
+  const io = require('./socket').init(server); // setting up socket.io
   io.on('connection', socket => {
     console.log('Client connected');
   });
