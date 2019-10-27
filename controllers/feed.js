@@ -59,7 +59,10 @@ exports.createPost = async (req, res, next) => {
     const user = await User.findById(req.userId);
     user.posts.push(post);  // adding post to the list of posts of the user
     await user.save();
-    io.getIO().emit('posts', { action: 'create', post: post});      // emit() to all users / broadcast() to all -sender
+    io.getIO().emit('posts', {
+      action: 'create',
+      post: { ...post._doc, creator: { _id: req.userId, name: user.name } }
+    });      // emit() to all users / broadcast() to all -sender
     res.status(201).json({
       message: 'Post created successfully!',
       post: post,
