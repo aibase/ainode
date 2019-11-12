@@ -6,6 +6,29 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+
+  previewText: {
+    type: String,
+    required: false
+  },
+
+  // Cogito fields
+  postType: {
+    // project/prj, service/srv, message/msg, idea, blog
+    // task/tsk/job, skill/skl, coins/rbc/atp
+    type: String,
+    required: false
+  },
+  interestTags: {
+    type: String,
+    required: false
+  },
+  sheets: {
+    type: String,
+    required: false
+  },
+  // Cogito fields
+
   imageUrl: {
     type: String,
     required: true
