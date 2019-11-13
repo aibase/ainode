@@ -47,10 +47,12 @@ exports.createPost = async (req, res, next) => {
   // Multer was able to extract a valid file
   const imageUrl = req.file.path;
   const title = req.body.title;
+  const previewText = req.body.previewText;
   const content = req.body.content;
   // Create post in db + local storage ~ git repos
   const post = new Post({
     title: title,
+    previewText: previewText,
     content: content,
     imageUrl: imageUrl,
     creator: req.userId
@@ -107,6 +109,7 @@ exports.updatePost = async (req, res, next) => {
     throw error;   
   }
   const title = req.body.title;
+  const previewText = req.body.previewText;
   const content = req.body.content;
   let imageUrl = req.body.image;
   if (req.file) {
@@ -134,6 +137,7 @@ exports.updatePost = async (req, res, next) => {
       clearImage(post.imageUrl);
     }
     post.title = title;
+    post.previewText = previewText;
     post.imageUrl = imageUrl;
     post.content = content;
     const result = await post.save();
