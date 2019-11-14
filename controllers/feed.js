@@ -49,12 +49,16 @@ exports.createPost = async (req, res, next) => {
   const title = req.body.title;
   const previewText = req.body.previewText;
   const postType = req.body.postType;
+  const interestTags = req.body.interestTags;
+  const sheets = req.body.sheets;
   const content = req.body.content;
   // Create post in db + local storage ~ git repos
   const post = new Post({
     title: title,
     previewText: previewText,
     postType: postType,
+    interestTags: interestTags,
+    sheets: sheets,
     content: content,
     imageUrl: imageUrl,
     creator: req.userId
@@ -113,6 +117,8 @@ exports.updatePost = async (req, res, next) => {
   const title = req.body.title;
   const previewText = req.body.previewText;
   const postType = req.body.postType;
+  const interestTags = req.body.interestTags;
+  const sheets = req.body.sheets;
   const content = req.body.content;
   let imageUrl = req.body.image;
   if (req.file) {
@@ -142,6 +148,8 @@ exports.updatePost = async (req, res, next) => {
     post.title = title;
     post.previewText = previewText;
     post.postType = postType;
+    post.interestTags = interestTags;
+    post.sheets = sheets;
     post.imageUrl = imageUrl;
     post.content = content;
     const result = await post.save();
